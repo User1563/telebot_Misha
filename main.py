@@ -6,15 +6,14 @@ class Bot2(Bott):
     def main(self) -> None:
         bb = Bott()
         application = Application.builder().token(self.tokenn).build()
-
         # application.add_handler(CommandHandler("start", bb.start))
         application.add_handler(CommandHandler("help", bb.help))
         application.add_handler(CommandHandler("gert", bb.gert))
-        application.add_handler(CommandHandler("button_1", bb.button_1))
+        application.add_handler(CommandHandler("file", bb.file_text))
         application.add_handler(CommandHandler("button_2", bb.button_2))
-        application.add_handler(CommandHandler("button_3", bb.button_3))
+        application.add_handler(CommandHandler("useful_materials", bb.button_3))
         application.add_handler(CommandHandler("button_4", bb.button_4))
-        application.add_handler(CommandHandler("button_4", bb.button_4))
+        # application.add_handler(CommandHandler("button_4", bb.button_4))
         # application.add_handler(CommandHandler('keyboard', b.start))
         conv_handler = ConversationHandler(
             entry_points=[CommandHandler("start", Bott().start)],
@@ -30,3 +29,7 @@ class Bot2(Bott):
 
 b = Bot2()
 b.main()
+
+
+
+

@@ -8,19 +8,25 @@ from telegram import InputFile
 import time
 
 
-class Bot:
+
+class Bott:
     def __init__(self):
         self.reply_keyboard = [['/gert', '/help'],
                                ['/button_1', '/button_2'],
                                ['/button_3', '/button_4']]
+        self.CONST = 1
         self.markup = ReplyKeyboardMarkup(self.reply_keyboard, one_time_keyboard=False)
         self.n = 0
         self.logginn = logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
-        self.tokenn = '6806407429:AAG3frXZuXwxL8TjG8KVdByYkG90CN2oVcI'
+        self.tokenn = '7013733046:AAH08PeoueIDuo7Aedec1dn4ck_e1ZF2DME'
         self.logger = logging.getLogger(__name__)
 
+    async def start(self, update, context):
+        update.message.reply_text('Нажмите еще раз на команду /start')
+        return self.CONST
 
-    async def start(self, update, context, **kwargs):
+
+    async def work_start(self, update, context):
         self.user = update.effective_user
         self.keyboard = [[InlineKeyboardButton("сайт",
                                                url='https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')],
@@ -28,10 +34,11 @@ class Bot:
                                                url='https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')]]
         self.reply_markup = InlineKeyboardMarkup(self.keyboard)
         await update.message.reply_html(rf"Привет {self.user.mention_html()}! Я бот куратор", reply_markup=self.markup)
-        time.sleep(2)
-        await update.message.reply_text('Полезные материалы можно посмотреть тут', reply_markup=self.reply_markup)
+        await update.message.reply_text('Введите фио')
+
         # bb = [[KeyboardButton('кноdfasdfпка', request_contact=None, request_location=None, **kwargs)]]
         # self.qq = ReplyKeyboardMarkup(bb)
+        return ConversationHandler.END
 
 
     async def help(self, update, context):
@@ -64,7 +71,7 @@ class Bot:
 
 
     async def button_3(self, update, context):
-        await update.message.reply_text('кнопка 3')
+        await update.message.reply_text('Полезные материалы можно посмотреть тут', reply_markup=self.reply_markup)
 
 
     async def button_4(self, update, context):

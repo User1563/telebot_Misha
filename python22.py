@@ -12,13 +12,13 @@ import time
 class Bott:
     def __init__(self):
         self.reply_keyboard = [['/gert', '/help'],
-                               ['/button_1', '/button_2'],
-                               ['/button_3', '/button_4']]
+                               ['/file', '/button_2'],
+                               ['/useful_materials', '/button_4']]
         self.CONST = 1
         self.markup = ReplyKeyboardMarkup(self.reply_keyboard, one_time_keyboard=False)
         self.n = 0
         self.logginn = logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
-        self.tokenn = '7013733046:AAH08PeoueIDuo7Aedec1dn4ck_e1ZF2DME'
+        self.tokenn = '6806407429:AAG3frXZuXwxL8TjG8KVdByYkG90CN2oVcI'
         self.logger = logging.getLogger(__name__)
 
     async def start(self, update, context):
@@ -28,13 +28,8 @@ class Bott:
 
     async def work_start(self, update, context):
         self.user = update.effective_user
-        self.keyboard = [[InlineKeyboardButton("сайт",
-                                               url='https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')],
-                         [InlineKeyboardButton("сайт",
-                                               url='https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')]]
-        self.reply_markup = InlineKeyboardMarkup(self.keyboard)
         await update.message.reply_html(rf"Привет {self.user.mention_html()}! Я бот куратор", reply_markup=self.markup)
-        await update.message.reply_text('Введите фио')
+        await update.message.reply_text('Введите Ваше Фамилия Имя Отчество')
 
         # bb = [[KeyboardButton('кноdfasdfпка', request_contact=None, request_location=None, **kwargs)]]
         # self.qq = ReplyKeyboardMarkup(bb)
@@ -53,7 +48,7 @@ class Bott:
             await update.message.reply_text(f"вы здесь не отмечались")
 
 
-    async def button_1(self, update, context):
+    async def file_text(self, update, context):
         try:
             await update.message.reply_document('текстовый_документ.txt')
         except BaseException as a:
@@ -71,7 +66,12 @@ class Bott:
 
 
     async def button_3(self, update, context):
-        await update.message.reply_text('Полезные материалы можно посмотреть тут', reply_markup=self.reply_markup)
+        self.keyboard = [[InlineKeyboardButton("сайт",
+                                               url='https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')],
+                         [InlineKeyboardButton("сайт",
+                                               url='https://ru.wikipedia.org/wiki/%D0%97%D0%B0%D0%B3%D0%BB%D0%B0%D0%B2%D0%BD%D0%B0%D1%8F_%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D0%B0')]]
+        self.repply_markup = InlineKeyboardMarkup(self.keyboard)
+        await update.message.reply_text(f"Полезные материалы можно посмотреть тут", reply_markup=self.repply_markup)
 
 
     async def button_4(self, update, context):

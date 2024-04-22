@@ -30,8 +30,6 @@ logger = logging.getLogger(__name__)
 
 async def start(update, context):
     await update.message.reply_text('Выберите функцию', reply_markup=markup_2)
-    # update.message.reply_text('Нажмите еще раз на команду /start')
-    # return CONST
 
 
 async def function(update, context):
@@ -106,9 +104,6 @@ async def work_start(update, context):
     await update.message.reply_html(rf"Привет {user.mention_html()}! Я бот куратор", reply_markup=markup)
     time.sleep(0.5)
     await update.message.reply_text('Нажмите на кнопку, чтобы обновить бота нажмите "/start"')
-
-    # bb = [[KeyboardButton('кноdfasdfпка', request_contact=None, request_location=None, **kwargs)]]
-    # self.qq = ReplyKeyboardMarkup(bb)
     return ConversationHandler.END
 
 
@@ -152,9 +147,3 @@ async def button_4(update, context):
 
 async def photo(update, context):
     await update.message.reply_photo('фото.jpg')
-
-
-# update.message.reply_html(
-#         rf"Hi {user.mention_html()}!",
-#         reply_markup=ForceReply(selective=True),
-#     )

@@ -6,14 +6,11 @@ from python22 import tokenn, CONST, FILE, MN
 
 def main() -> None:
     application = Application.builder().token(tokenn).build()
-    # application.add_handler(CommandHandler("start", bb.start))
     application.add_handler(CommandHandler("start", start))
     application.add_handler(CommandHandler("help", help))
-    application.add_handler(CommandHandler("gert", gert))
     application.add_handler(CommandHandler("file", file_text))
     application.add_handler(CommandHandler("useful_materials", button_3))
     application.add_handler(CommandHandler("audio", button_4))
-    # application.add_handler(CommandHandler("button_4", button_4))
     application.add_handler(CommandHandler('keyboard', start))
     application.add_handler(CommandHandler('photo', photo))
     conv_handler_4 = ConversationHandler(
@@ -60,12 +57,8 @@ def main() -> None:
     application.add_handler(conv_handler_6)
     application.add_handler(conv_handler_4)
     application.add_handler(conv_handler_7)
-
-
-    # application.add_handler(conv_handler)
     application.run_polling()
 
 
 if __name__ == '__main__':
     main()
-

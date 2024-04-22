@@ -1,5 +1,4 @@
 import logging
-import json
 from telegram.ext import *
 from telegram import ReplyKeyboardMarkup
 from telegram import InputFile
@@ -11,7 +10,8 @@ import time
 
 reply_keyboard = [['/fio', '/audio'],
                   ['/file', '/useful_materials'],
-                  ['/write', '/start_otz']]
+                  ['/write', '/start_otz'],
+                  ['/photo', '/start']]
 reply_keyboard_2 = [['/function']]
 CONST = 1
 FILE = 2
@@ -35,7 +35,7 @@ async def start(update, context):
 
 
 async def function(update, context):
-    await update.message.reply_text('Нажмите еще раз')
+    await update.message.reply_text('Нажмите еще раз, чтобы потвердить что вы не робот')
     return CONST
 
 
@@ -50,7 +50,7 @@ class Name:
             v = json.load(files)
             v[self.name + ' ' + self.surname] = self.text
         with open('fille.txt', 'a+') as filebase:
-            filebase.write(str(self.text))
+            filebase.write(str(self.text + ' '))
         with open('file.json', 'w', encoding='utf-8') as files_1:
             json.dump(v, files_1, indent=4)
 
@@ -65,12 +65,12 @@ class Name:
                 json.dump(v, file_, indent=4)
 
 async def write(update, context):
-    await update.message.reply_text('Напишите, что вы знаете о питоне')
+    await update.message.reply_text('Напишите сначала Фамилия имя а затем что вы знаете о питоне')
     return W
 
 
 async def otzivi(update, context):
-    await update.message.reply_text('Напишите ваш отзыв о работе бота')
+    await update.message.reply_text('Напишите сначала фамилия имя и потом отзыв о работе бота')
     return O
 
 
@@ -82,27 +82,30 @@ async def otzivi1(update, context):
         s3 = s[2]
         a = Name(s1, s2, s3)
         a.json_n_file()
-        await update.message.reply_text('Выполнено')
-        return ConversationHandler.END
-    except BaseException:
-        return ConversationHandler.END
+    except BaseException as nn:
+        await update.message.reply_text('Напишите сначала имя фамилия черз пробел а затем текст')
+    return ConversationHandler.END
 
 
 async def work_write(update, context):
-    string = str(update.message.text).split()
-    m1 = string[0]
-    m2 = string[1]
-    m3 = string[2]
-    n = Name(m1, m2, m3)
-    n.jsonfile()
-    await update.message.reply_text('Данные сохранены')
+    try:
+        string = str(update.message.text).split()
+        m1 = string[0]
+        m2 = string[1]
+        m3 = string[2]
+        n = Name(m1, m2, m3)
+        n.jsonfile()
+        await update.message.reply_text('Данные сохранены')
+    except IndexError as error:
+        await update.message.reply_text('некоректные данные')
     return ConversationHandler.END
 
 
 async def work_start(update, context):
     user = update.effective_user
     await update.message.reply_html(rf"Привет {user.mention_html()}! Я бот куратор", reply_markup=markup)
-    await update.message.reply_text('Введите Ваше Фамилия Имя Отчество')
+    time.sleep(0.5)
+    await update.message.reply_text('Нажмите на кнопку, чтобы обновить бота нажмите "/start"')
 
     # bb = [[KeyboardButton('кноdfasdfпка', request_contact=None, request_location=None, **kwargs)]]
     # self.qq = ReplyKeyboardMarkup(bb)
@@ -111,15 +114,6 @@ async def work_start(update, context):
 
 async def help(update, context):
     await update.message.reply_text("команда помощь")
-
-
-async def gert(update, context):
-    global nm
-    if nm >= 1:
-        await update.message.reply_text(f"вы здесь отмечались {nm}")
-    else:
-        nm += 1
-        await update.message.reply_text(f"вы здесь не отмечались")
 
 
 async def file_text(update, context):
@@ -152,9 +146,15 @@ async def text_file(update, context):
 
 async def button_4(update, context):
     file_audio = 'sample-15s.mp3'
-    await update.message.reply_text('кнопка 4')
+    await update.message.reply_text('аудио')
     await update.message.reply_audio(audio=file_audio)
 
 
 async def photo(update, context):
     await update.message.reply_photo('фото.jpg')
+
+
+# update.message.reply_html(
+#         rf"Hi {user.mention_html()}!",
+#         reply_markup=ForceReply(selective=True),
+#     )
